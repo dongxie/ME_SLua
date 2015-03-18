@@ -47,7 +47,7 @@ public class API  {
 
         get{
             if (assetRootProvider!=null)return assetRootProvider ();
-            return Application.persistentDataPath+"/";
+			return (Application.persistentDataPath.StartsWith("/")?Application.persistentDataPath:("/"+Application.persistentDataPath))+"/";
 
         }
     }

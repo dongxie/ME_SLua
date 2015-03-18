@@ -118,7 +118,7 @@ public class MePackager
         //删除临时文件
         if (!form.Equals(to))
         {
-            File.Delete(form);
+//            
         }
 
         Debug.Log(to + " ==>ok!!");
@@ -189,8 +189,10 @@ public class MePackager
     [MenuItem("ME Tools/4.同步到缓存 : 直接复制Asset->Lua目录(内含所有lua脚本文件)到缓存")]
     public static void copyToCache()
     {
-        string targetPath = API.AssetRoot + "lua";
-        string srcPath = Application.dataPath + "/Lua";
+
+		EncryptLua ();
+        string targetPath = API.AssetRoot + "lua/";
+		string srcPath = Application.dataPath + "/Data/lua/";
 
         List<FileInfo> files = new List<FileInfo>();
         getSubFiles(srcPath, files, 1);
@@ -207,7 +209,7 @@ public class MePackager
             File.WriteAllBytes(targetFullFilePath, fileBytes);
         }
 
-        Debug.Log(targetPath + " 文件夹已复制到 " + targetPath);
+		Debug.Log(srcPath + " 文件夹已复制到 " + targetPath);
     }
 
 

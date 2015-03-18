@@ -10,7 +10,7 @@ local json = require "json.dkjson"
 
 version=1
 appid=1
-weburl="http://192.168.1.30/version" --升级网址
+weburl="http://tt.tt/version" --升级网址
 AssetRoot=nil --资源目录
 
 
@@ -24,13 +24,13 @@ function main.Start()
 	AssetRoot=API.AssetRoot	
 
 	--检测更新 
-    --main.checkVersion() 
+    main.checkVersion() 
 
     --性能测试
  	--main.testdemo()
 
  	--直接启动打地鼠游戏
- 	main.RunMoleGame()
+ 	-- main.RunMoleGame()
 
  	--Debug.Log(LuaBehaviour)
 end

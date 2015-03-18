@@ -11,7 +11,7 @@ using LuaInterface;
 
 /// <summary>
 /// LuaBehaviour
-/// @author 小陆  QQ:2604904
+/// @author 小陆  QQ:2604904  
 /// </summary>
 [CustomLuaClassAttribute]
 public class LuaBehaviour : MonoBehaviour
@@ -87,7 +87,8 @@ public class LuaBehaviour : MonoBehaviour
     {
         foreach (AssetBundle bundle in API.BundleTable.Values)
         {
-            bundle.Unload(true);
+            if(bundle!=null)
+                bundle.Unload(false);
         }
         API.BundleTable.Clear();
     }
@@ -147,6 +148,8 @@ public class LuaBehaviour : MonoBehaviour
     protected void OnDestroy()
     {
 
+        UnLoadAllBundle();
+
         CallMethod("OnDestroy");
 
         if (table != null)
@@ -163,6 +166,20 @@ public class LuaBehaviour : MonoBehaviour
         return (IEnumerator)result;
     }
 */
+
+    //设置执行的table对象
+    public void setBehaviour(LuaTable myTable)
+    {
+        table = myTable;
+
+        table["this"] = this;
+        table["transform"] = transform;
+        table["gameObject"] = gameObject;
+
+        CallMethod("Start");
+
+        isLuaReady = true;
+    }
     //加载脚本文件
     public void DoFile(string fn)
     {
@@ -172,15 +189,7 @@ public class LuaBehaviour : MonoBehaviour
                       
             if (chunk != null  && (chunk is LuaTable))
             {
-                table = (LuaTable)chunk;
-          
-                table["this"] = this;              
-                table["transform"] = transform;
-                table["gameObject"] = gameObject;
-
-                CallMethod("Start");
-
-                isLuaReady = true;
+                setBehaviour((LuaTable)chunk);               
             }
           
         }
